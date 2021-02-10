@@ -1,0 +1,66 @@
+<html>
+<head>
+    <title>Hello Ext</title>
+ 
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/classic/theme-aria/resources/theme-aria-all.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/ext-all.js"></script>
+    <!--<script type="text/javascript" src="app.js"></script>-->
+	<!--<link rel="stylesheet" type="text/css" href="../extjs/resources/css/ext-all.css">
+    <script type="text/javascript" src="../extjs/ext-all-dev.js"></script>
+    <script type="text/javascript" src="app.js"></script>-->
+</head>
+<body bgcolor="white">
+	<style type="text/css">
+	    .field-margin {
+	        margin-left: 10%;
+	        margin-top:10px;
+	    }
+	</style>
+	<script>
+	Ext.onReady(function(){
+		var submitUrl = 'check/task1';
+		var csrf = Ext.util.Cookies.get('csrftoken');
+	    var formPanel=Ext.create('Ext.form.Panel',{
+	        title: 'Форма авторизации',
+	        width: 300,
+	        height:200,
+	        layout: 'anchor',
+	        defaults: {
+	            anchor: '80%'
+	        },
+	        renderTo: Ext.getBody(),
+	        items:[
+	        {
+	                xtype: 'textfield',
+	                fieldLabel: 'Имя пользователя',
+	                name: 'login',
+	                labelAlign: 'top',
+	                cls: 'field-margin',
+	                flex: 1
+
+	               }],       
+	        // кнопки формы
+	        buttons: [{
+	            text: 'Оправить',
+	            handler: function() {
+	                formPanel.getForm().submit(
+					
+		                {
+		                	params: {
+						        csrfmiddlewaretoken: Ext.util.Cookies.get('csrftoken')
+						    },
+		                	url: '/task1/',
+		                	success: function(form, action){
+                            Ext.MessageBox.alert('Авторизация пройдена. ',action.result.message);
+                			},
+                			failure: function(form, action){ 
+                            Ext.MessageBox.alert('Ошибка авторизации. ',action.result.message);
+                        	}
+	                	});
+	            }
+	        }]
+	    });
+	});
+	</script>
+</body>
+</html>
